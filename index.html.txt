@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 건강 포트폴리오 및 체력 측정 비교 대시보드</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7fa; margin: 0; padding: 20px; color: #2d3748; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1 { text-align: center; color: #1a365d; font-size: 24px; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #718096; font-size: 13px; margin-bottom: 25px; }
+
+        .section-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .section-box h3 { margin-top: 0; margin-bottom: 15px; font-size: 16px; color: #2b6cb0; border-bottom: 2px solid #bee3f8; padding-bottom: 5px; }
+        
+        .portfolio-content { font-size: 13px; line-height: 1.6; }
+        .portfolio-content h4 { color: #2b6cb0; margin-top: 15px; margin-bottom: 5px; font-size: 14px; }
+        .portfolio-content ul { margin: 5px 0 10px 20px; padding: 0; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .input-group { margin-bottom: 10px; }
+        .input-group label { display: block; font-size: 12px; font-weight: bold; color: #4a5568; margin-bottom: 5px; }
+        .input-group input, .input-group select { width: 100%; padding: 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 13px; box-sizing: border-box; }
+
+        .input-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; text-align: center; }
+        .input-table th, .input-table td { border: 1px solid #cbd5e0; padding: 8px; }
+        .input-table th { background: #edf2f7; color: #2d3748; }
+        .input-table input { width: 80px; padding: 6px; text-align: center; border: 1px solid #cbd5e0; border-radius: 4px; }
+
+        .calc-btn { display: block; width: 100%; background: #3182ce; color: white; border: none; padding: 15px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; transition: background 0.2s; }
+        .calc-btn:hover { background: #2b6cb0; }
+
+        .result-container { margin-top: 30px; border-top: 2px solid #e2e8f0; padding-top: 20px; display: none; }
+        .result-container h2 { font-size: 18px; color: #1a365d; margin-bottom: 15px; }
+        
+        .category-result { margin-bottom: 25px; border: 1px solid #cbd5e0; border-radius: 8px; overflow: hidden; background: white; }
+        .category-title { background: #2b6cb0; color: white; padding: 10px 15px; font-size: 15px; font-weight: bold; }
+        
+        .grade-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; }
+        .grade-table th, .grade-table td { border: 1px solid #cbd5e0; padding: 8px; }
+        .grade-table th { background: #edf2f7; color: #2d3748; }
+        
+        .highlight-green { background-color: #d4edda !important; font-weight: bold; color: #155724; border: 2px solid #28a745 !important; }
+        .highlight-blue { background-color: #cce5ff !important; font-weight: bold; color: #004085; border: 2px solid #007bff !important; }
+        .highlight-red { background-color: #f8d7da !important; font-weight: bold; color: #721c24; border: 2px solid #dc3545 !important; }
+
+        .source-footer { font-size: 11px; color: #718096; background: #f7fafc; padding: 8px 15px; border-top: 1px solid #e2e8f0; text-align: left; }
+
+        .bar-container { background: #e2e8f0; border-radius: 4px; overflow: hidden; height: 14px; width: 100%; margin-top: 4px; }
+        .bar-fill { height: 100%; background: #3182ce; text-align: right; font-size: 9px; color: white; line-height: 14px; padding-right: 4px; }
+        
+        .plus-val { color: #27ae60; font-weight: bold; }
+        .minus-val { color: #c0392b; font-weight: bold; }
+        .ai-note { font-size: 11px; text-align: right; color: #a0aec0; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>나의 건강 포트폴리오 및 체력 측정 비교 대시보드</h1>
+    <p class="subtitle">8~9주 실천 계획서 내용과 체력 측정 1차·2차 비교 분석을 하나의 페이지에서 확인하세요.</p>
+
+    <!-- [PART 1] 건강 포트폴리오 계획서 원문 내용 -->
+    <div class="section-box">
+        <h3>📋 나의 건강 포트폴리오: 8~9주 실천 계획서</h3>
+        <div class="portfolio-content">
+            <p><strong>목표:</strong> 현 체중(55.9kg) 유지 및 가벼운 일상 활력 증진 (체중 감량/증량 없음)</p>
+            
+            <h4>1. 나의 현재 상태 분석</h4>
+            <ul>
+                <li>체중/체지방률: 55.9 kg / 30.7% (유지 목표)</li>
+                <li>골격근량: 20.8 kg</li>
+                <li>3대 1RM: 스쿼트 50kg, 벤치프레스 30kg, 데드리프트 55kg</li>
+                <li>기타 체력 측정: 매달리기 10초, 좌전굴 30cm, 어깨 유연성(등 뒤로 손 잡기 - 오른손 -16, 왼손 -13)</li>
+                <li>강점: 기숙사 생활 중 무리하지 않고 가볍게 몸을 움직이려는 의지가 있으며, 기초적인 수면 시간(약 7시간)을 확보하고 있음.</li>
+                <li>보완할 점: 매달리기(10초) 및 어깨/하체 유연성이 다소 부족하며, 하루 2끼 식사 및 불규칙한 식습관으로 영양 균형 보완 필요.</li>
+                <li>평소 생활 습관: 7시간 정도 숙면을 취하나 식사는 하루 2끼로 다소 불규칙하며, 평소 고강도 운동보다는 가벼운 일상 위주의 활동 선호.</li>
+            </ul>
+
+            <h4>2. 신체활동 계획 (FITT-V) - "부담 없는 가벼운 실천"</h4>
+            <ul>
+                <li>F (빈도): 주 2회 (가벼운 홈트레이닝 위주)</li>
+                <li>I (강도): RPE 4~5 (숨이 약간 차고 가볍게 땀이 나는 정도의 편안한 강도)</li>
+                <li>T (시간): 회당 30분 내외 (무리하지 않고 가볍게 진행)</li>
+                <li>T (종류): 가벼운 전신 스트레칭, 맨몸 스쿼트, 가벼운 실내 신체활동</li>
+                <li>V (총량): 주 2세션 총 60분 내외의 최소한의 신체활동 유지</li>
+                <li>진행 (점진적 증가): 무거운 중량 운동 대신 횟수를 조금씩 늘리거나 동작을 부드럽게 수행</li>
+                <li>쉬어가는 주차: 5주차(중간고사 기간) 및 8주차(과제 폭탄 주차)는 운동을 과감히 쉬고 학업과 휴식에 집중</li>
+            </ul>
+
+            <h4>3. 수면 계획</h4>
+            <ul>
+                <li>현재 상태: 평균 7시간 정도 숙면을 취하나 취침 시간이 다소 들쑥날쑥함.</li>
+                <li>실천 습관:
+                    <ul>
+                        <li>매일 새벽 1시에 무조건 핸드폰 화면 끄고 자기</li>
+                        <li>자다가 중간에 깨더라도 절대 핸드폰 화면 보지 않고 바로 다시 잠들기</li>
+                    </ul>
+                </li>
+                <li>기록 방법: 별도의 수면일기 없이, 평소 사용하는 스마트폰의 내장 수면 기록 기능을 활용하거나 머릿속으로 수면 패턴을 점검함.</li>
+            </ul>
+
+            <h4>4. 영양 계획 (체중 유지)</h4>
+            <ul>
+                <li>현재 패턴: 하루 2끼 식사로 불규칙하며, 간편식 위주라 단백질과 수분 섭취가 부족함.</li>
+                <li>행동 목표:
+                    <ul>
+                        <li>체중 감량이나 증량이 아닌 현재 체중(55.9kg) 유지를 목표로 평소 식사량 그대로 유지</li>
+                        <li>하루 물 1.5리터 이상 꾸준히 마시기</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>5. 선택 영역 (음주 관리)</h4>
+            <ul>
+                <li>실천 목표: 과도한 음주를 피하고, 술자리가 있는 주에는 음주 전후로 물을 충분히 마셔 신체 부담과 숙취를 줄이기.</li>
+            </ul>
+
+            <h4>6. 목표 설정과 위험 요소</h4>
+            <ul>
+                <li>SMART 목표:
+                    <ul>
+                        <li>운동: 8주 동안 무리하지 않고 주 2회 가벼운 활동(30분) 꾸준히 실천하기</li>
+                        <li>생활: 새벽 1시 핸드폰 화면 끄고 자기 및 물 하루 1.5L 마시기 90% 이상 달성하기</li>
+                    </ul>
+                </li>
+                <li>위험 요소 및 대처법:
+                    <ul>
+                        <li>상황 1 (시험기간 및 밤샘 과제로 새벽 1시 넘길 위기): 과제를 하더라도 새벽 1시에는 무조건 핸드폰 화면을 끄고 자리에 누워 억지로라도 눈 붙이기</li>
+                        <li>상황 2 (귀찮음으로 운동이나 물 마시기 포기 위기): "운동은 아주 가볍게 10분만 해도 성공이다"라는 마음을 가지며, 물은 눈에 잘 띄는 곳에 텀블러를 항상 두어 생각날 때마다 마시기</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="ai-note">AI 활용 명시: 본 계획서의 전체적인 구조 설계, FITT-V 구성 및 문장 다듬기 과정에서 Gemini AI를 보조 도구로 활용하였습니다.</div>
+    </div>
+
+    <!-- [PART 2] 피검자 기본 정보 -->
+    <div class="section-box">
+        <h3>1. 피검자 기본 정보</h3>
+        <div class="grid-3">
+            <div class="input-group">
+                <label>나이 (세)</label>
+                <input type="number" id="age" value="20">
+            </div>
+            <div class="input-group">
+                <label>성별</label>
+                <select id="gender">
+                    <option value="female">여성 (20~29세 기준)</option>
+                    <option value="male">남성 (20~29세 기준)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>체중 (kg)</label>
+                <input type="number" id="body_weight" step="0.1" value="55.9">
+            </div>
+        </div>
+    </div>
+
+    <!-- [PART 3] 1차 및 2차 측정 기록 입력 -->
+    <div class="section-box">
+        <h3>2. 1차 및 2차 측정 기록 입력</h3>
+        <table class="input-table">
+            <tr>
+                <th>측정 항목</th>
+                <th>1차 기록 (초기)</th>
+                <th>2차 기록 (말기)</th>
+                <th>단위</th>
+            </tr>
+            <tr><td>체지방률 (인바디)</td><td><input type="number" id="bf_1" step="0.1" value="30.7"></td><td><input type="number" id="bf_2" step="0.1" value="24.0"></td><td>%</td></tr>
+            <tr><td>20m 셔틀런</td><td><input type="number" id="sh_1" value="0"></td><td><input type="number" id="sh_2" value="0"></td><td>회</td></tr>
+            <tr><td>벤치프레스 1RM</td><td><input type="number" id="bn_1" step="0.5" value="30"></td><td><input type="number" id="bn_2" step="0.5" value="45"></td><td>kg</td></tr>
+            <tr><td>스쿼트 1RM</td><td><input type="number" id="sq_1" step="0.5" value="50"></td><td><input type="number" id="sq_2" step="0.5" value="75"></td><td>kg</td></tr>
+            <tr><td>데드리프트 1RM</td><td><input type="number" id="de_1" step="0.5" value="55"></td><td><input type="number" id="de_2" step="0.5" value="80"></td><td>kg</td></tr>
+            <tr><td>레그프레스 1RM</td><td><input type="number" id="lp_1" step="0.5" value="0"></td><td><input type="number" id="lp_2" value="0"></td><td>kg</td></tr>
+            <tr><td>팔굽혀펴기 (1차:무릎대고 / 2차:정식)</td><td><input type="number" id="pu_1" value="0"></td><td><input type="number" id="pu_2" value="0"></td><td>회</td></tr>
+            <tr><td>오래 매달리기</td><td><input type="number" id="hg_1" value="10"></td><td><input type="number" id="hg_2" value="30"></td><td>초</td></tr>
+            <tr><td>좌전굴 (유연성)</td><td><input type="number" id="fl_1" step="0.1" value="30"></td><td><input type="number" id="fl_2" value="35"></td><td>cm</td></tr>
+            <tr><td>어깨 뒤로 손잡기</td><td><input type="number" id="sf_1" step="0.1" value="16"></td><td><input type="number" id="sf_2" step="0.1" value="10"></td><td>cm간격</td></tr>
+        </table>
+    </div>
+
+    <button class="calc-btn" onclick="runAnalysis()">분석하기</button>
+
+    <!-- [PART 4] 결과 출력 영역 -->
+    <div class="result-container" id="resultArea">
+        <h2>📊 1차 vs 2차 종합 성장 비교 및 등급 분석 결과</h2>
+        
+        <div class="category-result">
+            <div class="category-title">📈 1차 및 2차 기록 성장 비교 요약표</div>
+            <table class="grade-table" id="summaryTable"></table>
+            <div class="source-footer">색상 안내: <span style="color:#27ae60; font-weight:bold;">■ 1·2등급(우수)</span> | <span style="color:#007bff; font-weight:bold;">■ 3등급(보통)</span> | <span style="color:#dc3545; font-weight:bold;">■ 4·5등급(미흡/주의)</span></div>
+        </div>
+
+        <div id="detailedTables"></div>
+    </div>
+</div>
+
+<script>
+function getGradeStyle(gradeNum) {
+    if (gradeNum === 1 || gradeNum === 2) return "highlight-green";
+    if (gradeNum === 3) return "highlight-blue";
+    return "highlight-red";
+}
+
+function runAnalysis() {
+    let gender = document.getElementById('gender').value;
+
+    let data = {
+        bf: {name: "체지방률", v1: parseFloat(document.getElementById('bf_1').value), v2: parseFloat(document.getElementById('bf_2').value), unit: "%", inv: true},
+        sh: {name: "20m 셔틀런", v1: parseFloat(document.getElementById('sh_1').value), v2: parseFloat(document.getElementById('sh_2').value), unit: "회", inv: false},
+        bn: {name: "벤치프레스", v1: parseFloat(document.getElementById('bn_1').value), v2: parseFloat(document.getElementById('bn_2').value), unit: "kg", inv: false},
+        sq: {name: "스쿼트", v1: parseFloat(document.getElementById('sq_1').value), v2: parseFloat(document.getElementById('sq_2').value), unit: "kg", inv: false},
+        de: {name: "데드리프트", v1: parseFloat(document.getElementById('de_1').value), v2: parseFloat(document.getElementById('de_2').value), unit: "kg", inv: false},
+        lp: {name: "레그프레스", v1: parseFloat(document.getElementById('lp_1').value), v2: parseFloat(document.getElementById('lp_2').value), unit: "kg", inv: false},
+        pu1: {name: "팔굽혀펴기 (1차:무릎대고)", v1: parseFloat(document.getElementById('pu_1').value), v2: null, unit: "회", inv: false},
+        pu2: {name: "팔굽혀펴기 (2차:정식)", v1: null, v2: parseFloat(document.getElementById('pu_2').value), unit: "회", inv: false},
+        hg: {name: "오래 매달리기", v1: parseFloat(document.getElementById('hg_1').value), v2: parseFloat(document.getElementById('hg_2').value), unit: "초", inv: false},
+        fl: {name: "좌전굴 (유연성)", v1: parseFloat(document.getElementById('fl_1').value), v2: parseFloat(document.getElementById('fl_2').value), unit: "cm", inv: false},
+        sf: {name: "어깨 뒤로 손잡기", v1: parseFloat(document.getElementById('sf_1').value), v2: parseFloat(document.getElementById('sf_2').value), unit: "cm", inv: true}
+    };
+
+    function calcGrade(key, val) {
+        if (isNaN(val) || val === 0) return 5;
+        if (key === 'bf') {
+            return val <= 18.4 ? 1 : (val <= 22.3 ? 2 : (val <= 26.1 ? 3 : (val <= 29.9 ? 4 : 5)));
+        } else if (key === 'sh') {
+            return val >= 69 ? 1 : (val >= 50 ? 2 : (val >= 40 ? 3 : (val >= 30 ? 4 : 5)));
+        } else if (key === 'bn') {
+            return val >= 78 ? 1 : (val >= 66 ? 2 : (val >= 54 ? 3 : (val >= 42 ? 4 : 5)));
+        } else if (key === 'sq' || key === 'de') {
+            return val >= 134 ? 1 : (val >= 94 ? 2 : (val >= 74 ? 3 : (val >= 54 ? 4 : 5)));
+        } else if (key === 'lp') {
+            return val >= 163 ? 1 : (val >= 136 ? 2 : (val >= 109 ? 3 : (val >= 82 ? 4 : 5)));
+        } else if (key === 'pu1') {
+            return val >= 40 ? 1 : (val >= 30 ? 2 : (val >= 20 ? 3 : (val >= 10 ? 4 : 5)));
+        } else if (key === 'pu2') {
+            return val >= 55 ? 1 : (val >= 43 ? 2 : (val >= 31 ? 3 : (val >= 19 ? 4 : 5)));
+        } else if (key === 'hg') {
+            return val >= 60 ? 1 : (val >= 45 ? 2 : (val >= 30 ? 3 : (val >= 15 ? 4 : 5)));
+        } else if (key === 'fl') {
+            return val >= 24 ? 1 : (val >= 19 ? 2 : (val >= 14 ? 3 : (val >= 2 ? 4 : 5)));
+        } else if (key === 'sf') {
+            return val <= -5 ? 1 : (val <= 0 ? 2 : (val <= 5 ? 3 : (val <= 10 ? 4 : 5)));
+        }
+        return 3;
+    }
+
+    let summaryHtml = `<tr>
+        <th>측정 항목</th>
+        <th>1차 기록</th>
+        <th>1차 등급</th>
+        <th>2차 기록</th>
+        <th>2차 등급</th>
+        <th>변화량 및 성장률</th>
+        <th>시각적 변화 (그래프)</th>
+    </tr>`;
+
+    let keys = ['bf', 'sh', 'bn', 'sq', 'de', 'lp', 'hg', 'fl', 'sf'];
+    keys.forEach(k => {
+        let item = data[k];
+        let g1 = calcGrade(k, item.v1);
+        let g2 = calcGrade(k, item.v2);
+        
+        let diff = item.v2 - item.v1;
+        let rate = item.v1 !== 0 ? ((diff / item.v1) * 100).toFixed(1) : 0;
+        let diffStr = (diff > 0 ? "+" + diff.toFixed(1) : diff.toFixed(1)) + item.unit;
+        let rateStr = (item.inv ? (diff <= 0 ? "감소 (개선)" : "증가 (악화)") : (diff >= 0 ? "+" + rate + "%" : rate + "%"));
+        let valClass = (item.inv ? diff <= 0 : diff >= 0) ? "plus-val" : "minus-val";
+
+        let maxVal = Math.max(Math.abs(item.v1), Math.abs(item.v2)) * 1.3 || 100;
+        let p1 = Math.min(100, Math.max(5, (Math.abs(item.v1) / maxVal) * 100));
+        let p2 = Math.min(100, Math.max(5, (Math.abs(item.v2) / maxVal) * 100));
+
+        summaryHtml += `<tr>
+            <td><strong>${item.name}</strong></td>
+            <td>${item.v1}${item.unit}</td>
+            <td><span class="${getGradeStyle(g1)}" style="padding:2px 6px; border-radius:4px;">${g1}등급</span></td>
+            <td>${item.v2}${item.unit}</td>
+            <td><span class="${getGradeStyle(g2)}" style="padding:2px 6px; border-radius:4px;">${g2}등급</span></td>
+            <td class="${valClass}">${diffStr} (${rateStr})</td>
+            <td style="text-align:left; width: 180px;">
+                <div style="font-size:10px; color:#718096;">1차: ${item.v1}</div>
+                <div class="bar-container"><div class="bar-fill" style="width: ${p1}%; background:#718096;"></div></div>
+                <div style="font-size:10px; color:#718096; margin-top:2px;">2차: ${item.v2}</div>
+                <div class="bar-container"><div class="bar-fill" style="width: ${p2}%; background:#3182ce;"></div></div>
+            </td>
+        </tr>`;
+    });
+
+    let pu1_val = data.pu1.v1;
+    let pu2_val = data.pu2.v2;
+    let g_pu1 = calcGrade('pu1', pu1_val);
+    let g_pu2 = calcGrade('pu2', pu2_val);
+    summaryHtml += `<tr>
+        <td><strong>팔굽혀펴기 (1차:무릎대고 / 2차:정식)</strong></td>
+        <td>${pu1_val}회</td>
+        <td><span class="${getGradeStyle(g_pu1)}" style="padding:2px 6px; border-radius:4px;">${g_pu1}등급</span></td>
+        <td>${pu2_val}회</td>
+        <td><span class="${getGradeStyle(g_pu2)}" style="padding:2px 6px; border-radius:4px;">${g_pu2}등급</span></td>
+        <td style="color:#718096; font-size:11px;">측정 방식 변경 (종목 기준 상이)</td>
+        <td style="text-align:left; width: 180px;">
+            <div style="font-size:10px; color:#718096;">1차: ${pu1_val}</div>
+            <div class="bar-container"><div class="bar-fill" style="width: ${Math.min(100, pu1_val*2)}%; background:#718096;"></div></div>
+            <div style="font-size:10px; color:#718096; margin-top:2px;">2차: ${pu2_val}</div>
+            <div class="bar-container"><div class="bar-fill" style="width: ${Math.min(100, pu2_val*2)}%; background:#3182ce;"></div></div>
+        </td>
+    </tr>`;
+
+    document.getElementById('summaryTable').innerHTML = summaryHtml;
+
+    let g_bf = calcGrade('bf', data.bf.v2);
+    let g_sq = calcGrade('sq', data.sq.v2);
+    let g_sh = calcGrade('sh', data.sh.v2);
+    let g_fl = calcGrade('fl', data.fl.v2);
+
+    let detailsHtml = `
+    <!-- 신체조성 파트 -->
+    <div class="category-result">
+        <div class="category-title">🟢 신체조성 파트 (체지방률 등급표)</div>
+        <table class="grade-table">
+            <tr><th>등급</th><th>백분위</th><th>기준 범위 (여성 20대 기준)</th></tr>
+            <tr class="${g_bf==1?'highlight-green':''}"><td>1등급</td><td>상위 20%</td><td>~ 18.4%</td></tr>
+            <tr class="${g_bf==2?'highlight-green':''}"><td>2등급</td><td>상위 21~40%</td><td>18.5 ~ 22.3%</td></tr>
+            <tr class="${g_bf==3?'highlight-blue':''}"><td>3등급</td><td>상위 41~60%</td><td>22.4 ~ 26.1%</td></tr>
+            <tr class="${g_bf==4?'highlight-red':''}"><td>4등급</td><td>상위 61~80%</td><td>26.2 ~ 29.9%</td></tr>
+            <tr class="${g_bf==5?'highlight-red':''}"><td>5등급</td><td>하위 20%</td><td>30.0% 이상</td></tr>
+        </table>
+        <div class="source-footer">출처: ACSM Guidelines for Exercise Testing and Prescription / 국민체력100 체지방률 규준</div>
+    </div>
+
+    <!-- 근력 파트 -->
+    <div class="category-result">
+        <div class="category-title">💪 근력 파트 통합 등급표 (1RM 기준)</div>
+        <table class="grade-table">
+            <tr><th>등급</th><th>백분위</th><th>스쿼트</th><th>데드리프트</th><th>벤치프레스</th><th>레그프레스</th></tr>
+            <tr class="${g_sq==1?'highlight-green':''}"><td>1등급</td><td>상위 20%</td><td>≥ 134kg</td><td>≥ 134kg</td><td>≥ 78kg</td><td>≥ 163kg</td></tr>
+            <tr class="${g_sq==2?'highlight-green':''}"><td>2등급</td><td>상위 21~40%</td><td>94~133kg</td><td>94~133kg</td><td>66~77kg</td><td>136~162kg</td></tr>
+            <tr class="${g_sq==3?'highlight-blue':''}"><td>3등급</td><td>상위 41~60%</td><td>74~93kg</td><td>74~93kg</td><td>54~65kg</td><td>109~135kg</td></tr>
+            <tr class="${g_sq==4?'highlight-red':''}"><td>4등급</td><td>상위 61~80%</td><td>54~73kg</td><td>54~73kg</td><td>42~53kg</td><td>82~108kg</td></tr>
+            <tr class="${g_sq==5?'highlight-red':''}"><td>5등급</td><td>하위 20%</td><td>≤ 53kg</td><td>≤ 53kg</td><td>≤ 41kg</td><td>≤ 81kg</td></tr>
+        </table>
+        <div class="source-footer">출처: ACSM Guidelines (레그프레스) / Cooper Institute & NSCA (스쿼트·데드·벤치프레스 1RM 기준표)</div>
+    </div>
+
+    <!-- 근지구력 파트 -->
+    <div class="category-result">
+        <div class="category-title">🏋️️ 근지구력 파트 (1차: 무릎대고 / 2차: 정식 팔굽혀펴기)</div>
+        <table class="grade-table">
+            <tr><th>등급</th><th>백분위</th><th>1차 기준 (무릎대고 팔굽혀펴기)</th><th>2차 기준 (정식 팔굽혀펴기)</th></tr>
+            <tr class="${(g_pu1==1 || g_pu2==1)?'highlight-green':''}"><td>1등급</td><td>상위 20%</td><td>≥ 40회</td><td>≥ 55회</td></tr>
+            <tr class="${(g_pu1==2 || g_pu2==2)?'highlight-green':''}"><td>2등급</td><td>상위 21~40%</td><td>30 ~ 39회</td><td>43 ~ 54회</td></tr>
+            <tr class="${(g_pu1==3 || g_pu2==3)?'highlight-blue':''}"><td>3등급</td><td>상위 41~60%</td><td>20 ~ 29회</td><td>31 ~ 42회</td></tr>
+            <tr class="${(g_pu1==4 || g_pu2==4)?'highlight-red':''}"><td>4등급</td><td>상위 61~80%</td><td>10 ~ 19회</td><td>19 ~ 30회</td></tr>
+            <tr class="${(g_pu1==5 || g_pu2==5)?'highlight-red':''}"><td>5등급</td><td>하위 20%</td><td>≤ 9회</td><td>≤ 18회</td></tr>
+        </table>
+        <div class="source-footer">출처: ACSM Guidelines for Exercise Testing and Prescription (11th ed.) / 국민체력100 측정기준 (종목별 표준 규준 반영)</div>
+    </div>
+
+    <!-- 심폐지구력 파트 -->
+    <div class="category-result">
+        <div class="category-title">❤️ 심폐지구력 파트 (20m 셔틀런)</div>
+        <table class="grade-table">
+            <tr><th>등급</th><th>백분위</th><th>기준 범위 (왕복 횟수)</th></tr>
+            <tr class="${g_sh==1?'highlight-green':''}"><td>1등급</td><td>상위 20%</td><td>≥ 69회</td></tr>
+            <tr class="${g_sh==2?'highlight-green':''}"><td>2등급</td><td>상위 21~40%</td><td>50 ~ 68회</td></tr>
+            <tr class="${g_sh==3?'highlight-blue':''}"><td>3등급</td><td>상위 41~60%</td><td>40 ~ 49회</td></tr>
+            <tr class="${g_sh==4?'highlight-red':''}"><td>4등급</td><td>상위 61~80%</td><td>30 ~ 39회</td></tr>
+            <tr class="${g_sh==5?'highlight-red':''}"><td>5등급</td><td>하위 20%</td><td>≤ 29회</td></tr>
+        </table>
+        <div class="source-footer">출처: FitnessGram / 국민체력진흥공단 체력기준표 (20m PACER 셔틀런 규준)</div>
+    </div>
+
+    <!-- 유연성 파트 -->
+    <div class="category-result">
+        <div class="category-title">🧘 유연성 파트 통합 등급표</div>
+        <table class="grade-table">
+            <tr><th>등급</th><th>백분위</th><th>앉아윗몸앞으로굽히기 (좌전굴)</th><th>어깨 뒤로 손잡기 규준</th></tr>
+            <tr class="${g_fl==1?'highlight-green':''}"><td>1등급</td><td>상위 20%</td><td>≥ +24.0 cm</td><td>손가락 겹침 (< -5cm)</td></tr>
+            <tr class="${g_fl==2?'highlight-green':''}"><td>2등급</td><td>상위 21~40%</td><td>+19.0 ~ +23.9 cm</td><td>손가락 닿음 (0 ~ -5cm)</td></tr>
+            <tr class="${g_fl==3?'highlight-blue':''}"><td>3등급</td><td>상위 41~60%</td><td>+14.0 ~ +18.9 cm</td><td>간격 0 ~ 5cm</td></tr>
+            <tr class="${g_fl==4?'highlight-red':''}"><td>4등급</td><td>상위 61~80%</td><td>+2.0 ~ +13.9 cm</td><td>간격 5 ~ 10cm</td></tr>
+            <tr class="${g_fl==5?'highlight-red':''}"><td>5등급</td><td>하위 20%</td><td>< +2.0 cm</td><td>간격 > 15cm 이상</td></tr>
+        </table>
+        <div class="source-footer">출처: ACSM Guidelines / 국민체력100 건강체력 평가기준 (관절 가동범위 규준)</div>
+    </div>`;
+
+    document.getElementById('detailedTables').innerHTML = detailsHtml;
+    document.getElementById('resultArea').style.display = "block";
+}
+</script>
+
+</body>
+</html>
